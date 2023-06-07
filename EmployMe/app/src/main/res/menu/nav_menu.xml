@@ -26,6 +26,27 @@
         android:title="">
         <menu>
             <item
+                android:id="@+id/id_calculadora"
+                android:icon="@drawable/ico_calculadora"
+                android:title="Calculadora"/>
+
+            <item
+                android:id="@+id/id_notas"
+                android:icon="@drawable/ico_notas"
+                android:title="Notas"/>
+
+            <item
+                android:id="@+id/id_conversor"
+                android:icon="@drawable/ico_conversor"
+                android:title="Conversor de unidades"/>
+
+        </menu>
+    </item>
+
+    <item
+        android:title="">
+        <menu>
+            <item
                 android:id="@+id/nav1_logout"
                 android:icon="@drawable/baseline_exit_to_app_24"
                 android:title="salir"/>
