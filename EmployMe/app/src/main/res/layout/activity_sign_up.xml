@@ -41,38 +41,51 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/name_email"
+                android:id="@+id/nameUser"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/cuadro_editext"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
-                android:hint="Nombre"
+                android:hint="Nombre Usuario"
                 android:drawableLeft="@drawable/ico_perfil"
                 android:textColor="@color/black"
                 android:drawablePadding="8dp"/>
 
             <EditText
+                android:id="@+id/emailUser"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/first_name"
                 android:background="@drawable/cuadro_editext"
                 android:layout_marginTop="20dp"
+                android:inputType="textEmailAddress"
                 android:padding="8dp"
-                android:hint="Apellido Materno"
+                android:hint="Email"
                 android:drawableLeft="@drawable/ico_perfil"
                 android:textColor="@color/black"
                 android:drawablePadding="8dp"/>
 
-
             <EditText
-                android:id="@+id/phone"
+                android:id="@+id/categoryUser"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/cuadro_editext"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
                 android:hint="Categoria"
+                android:drawableLeft="@drawable/ico_play"
+                android:textColor="@color/black"
+                android:drawablePadding="8dp"
+                tools:ignore="DuplicateIds" />
+
+            <EditText
+                android:id="@+id/phoneUser"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/cuadro_editext"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:hint="Telefono"
                 android:drawableLeft="@drawable/ico_play"
                 android:textColor="@color/black"
                 android:drawablePadding="8dp"
@@ -85,7 +98,7 @@
                 android:background="@drawable/cuadro_editext">
 
                 <EditText
-                    android:id="@+id/passwordET"
+                    android:id="@+id/passwordUser"
                     android:layout_toStartOf="@+id/passwordIcon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -114,14 +127,14 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <!-- <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/cuadro_editext">
 
                 <EditText
-                    android:id="@+id/conpassword"
+                    android:id="@+id/conpasswordUser2"
                     android:layout_toStartOf="@+id/conpasswordIcon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -148,13 +161,13 @@
                     android:layout_marginTop="20dp"
                     />
 
-            </RelativeLayout>
+            </RelativeLayout> -->
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:id="@+id/btnRegisterUser"
                 android:text="Registrarse"
-                android:id="@+id/login_button"
                 android:textSize="15sp"
                 android:textColor="@color/white"
                 android:layout_marginTop="30dp"

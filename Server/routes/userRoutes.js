@@ -14,4 +14,10 @@ router.post('/login', function (req, res, next) {
     userController.login(req, res, next);
 });
 
+router.post('/userCreate', function (req, res, next){
+    console.log("Nuevo Usuario")
+    const userController = require('../controller/userController');
+    userController.createUser(req, res, next);
+});
+
 module.exports = router;

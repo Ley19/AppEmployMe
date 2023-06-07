@@ -1,7 +1,5 @@
 const db = require('../config/connection');
 
-
-
 function getUserById(id, callback) {
   console.log(id);
   const query = 'SELECT * FROM user WHERE id_user = ?';
@@ -15,7 +13,7 @@ function login(email, password, callback) {
       console.error('Error al realizar el inicio de sesión: ', error);
       callback(error, null);
     } else if (results.length === 0) {
-      
+
       callback(false, null);
     } else {
       const user = {
@@ -28,7 +26,25 @@ function login(email, password, callback) {
   });
 }
 
+function createUser(user, callback) {
+  const query = 'INSERT INTO user (nameUser, email, password, phone, dateRegister, id_category) VALUES (?, ?, ?, ?, ?, ?)';
+  const values = [user.nameUser, user.email, user.password, user.phone, user.dateRegister, user.id_category];
+
+  db.query(query, values, (error, result) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      // Aquí puedes devolver el ID del usuario recién insertado o cualquier otro valor que desees
+      callback(null, result.insertId);
+    }
+  });
+}
+
+
+
+
 module.exports = {
   getUserById,
   login,
+  createUser,
 };
