@@ -55,9 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.login_password);
         buttonPassword = findViewById(R.id.passwordIcon);
 
-        TextView singUpRedirectedText = findViewById(R.id.forgetPassword);
         String text = "Olvidaste tu contraseña";
-        singUpRedirectedText.setText(Html.fromHtml(text));
+        forgetPassword.setText(Html.fromHtml(text));
 
         buttonPassword.setOnClickListener(new View.OnClickListener() {
 
@@ -154,16 +153,33 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Falta ingresar la contraseña", Toast.LENGTH_SHORT).show();
                 } else {
                     // Realizar la acción deseada cuando los campos no estén vacíos
+
                     iniciarSesion(email, password);
+
+                //Validar campos llenos
+                boolean isFormValid = true;
+                if(email.isEmpty()){
+                    emailEditText.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if(password.isEmpty()){
+                    passwordEditText.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if (isFormValid){
+                    iniciarSesion(email, password);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+
                 }
             }
-        });
+        }
+    });
 
     }
+    public void iniciarSesion(String email, String password) {
 
-    private void iniciarSesion(String email, String password) {
-
-        String url = "http://192.168.0.111:3000/login";
+        String url = APIUtils.getFullUrl("login");
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -208,8 +224,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Usuario incorrecto", Toast.LENGTH_SHORT).show();
                                 // El campo "user" es nulo en el objeto JSON
                                 // Manejar este caso según tus necesidades
-                            }
-                        } catch (JSONException e) {
+                                }
+                            } catch (JSONException e) {
                             e.printStackTrace();
                             // Manejar la excepción JSONException aquí
                         }
@@ -229,6 +245,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Agregar la solicitud a la cola de solicitudes de Volley
         Volley.newRequestQueue(this).add(jsonObjectRequest);
-    }
+        }
 
 }
+

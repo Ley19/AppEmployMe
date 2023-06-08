@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.util.Log;
@@ -30,7 +31,9 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
+import com.example.navbotdialog.APIUtils;
 
 public class SignUpActivity extends AppCompatActivity {
     TextView loginRedirectText;
@@ -147,14 +150,14 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void registerUser(String userName, String userEmail, String userCategori, String userPhone, String userPassword) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(calendar.getTime());
+
+        String url = APIUtils.getFullUrl("userCreate");
 
         // Construir el parámetro de la solicitud
         HashMap<String, String> params = new HashMap<>();
@@ -164,8 +167,6 @@ public class SignUpActivity extends AppCompatActivity {
         params.put("phone", userPhone);
         params.put("dateRegister", currentDate);
         params.put("id_category", userCategori);
-
-        String url = "http://192.168.0.111:3000/userCreate";
 
         // Solicitud POST
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -181,6 +182,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (success) {
                                     // Inserción exitosa
                                     Toast.makeText(getApplicationContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                                    // Redireccionar a otra ventana
+                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish(); // Opcionalmente, puedes finalizar la actividad actual si no deseas que el usuario vuelva a ella con el botón "Atrás"
                                 } else {
                                     // Fallo en la inserción
                                     String errorMessage = response.getString("message");
@@ -200,19 +205,14 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // Error en la solicitud
                         // Aquí puedes agregar el código para manejar el error de la solicitud
-                        Log.e("Error en la solicitud", error.getMessage());
+                        // Log.e("Error en la solicitud", error.getMessage());
                         if (error.networkResponse != null && error.networkResponse.data != null) {
                             String responseString = new String(error.networkResponse.data);
                             Log.e("Respuesta del servidor", responseString);
                         }
-
                     }
                 });
-
         // Agregar la solicitud a la cola de solicitudes
         requestQueue.add(jsonObjectRequest);
     }
-
-
-
 }

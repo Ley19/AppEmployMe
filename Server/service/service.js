@@ -41,8 +41,6 @@ function createUser(user, callback) {
 }
 
 
-
-
 module.exports = {
   getUserById,
   login,
