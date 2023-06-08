@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassword = findViewById(R.id.forgetPassword);
         enviar_a_Registro = findViewById(R.id.enviar_a_Registro);
 
-        TextView singUpRedirectedText = findViewById(R.id.forgetPassword);
+        //TextView singUpRedirectedText = findViewById(R.id.forgetPassword);
         String text = "Olvidaste tu contraseña";
-        singUpRedirectedText.setText(Html.fromHtml(text));
+        forgetPassword.setText(Html.fromHtml(text));
 
         enviar_a_Registro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,16 +67,28 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
 
-                iniciarSesion(email, password);
+                //Validar campos llenos
+                boolean isFormValid = true;
+                if(email.isEmpty()){
+                    emailEditText.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if(password.isEmpty()){
+                    passwordEditText.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if (isFormValid){
+                    iniciarSesion(email, password);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
     }
 
-
-
     private void iniciarSesion(String email, String password) {
-        String url = "http://192.168.0.229:3000/login";
+        String url = APIUtils.getFullUrl("login");
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -111,14 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                     // Redireccionar a MainActivity
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
-                                    finish(); // Opcionalmente, finalizar la actividad actual
-                                } else {
-                                    // La conexión fue exitosa, pero hubo un error en la autenticación
-                                    // Puedes mostrar un mensaje de error o realizar otras acciones
                                 }
-                            } else {
-                                // El campo "user" es nulo en el objeto JSON
-                                // Manejar este caso según tus necesidades
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -139,6 +144,4 @@ public class LoginActivity extends AppCompatActivity {
         // Agregar la solicitud a la cola de solicitudes de Volley
         Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
-
-
 }

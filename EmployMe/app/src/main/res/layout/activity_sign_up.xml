@@ -9,7 +9,6 @@
     android:background="@drawable/fondoemployme"
     tools:context=".SignUpActivity">
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,7 +103,7 @@
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/ico_lock"
                     android:background="@drawable/cuadro_editext"
-                    android:hint="Password"
+                    android:hint="Contraseña"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
@@ -126,7 +125,6 @@
                     />
 
             </RelativeLayout>
-
             <!-- <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -174,7 +172,6 @@
                 android:backgroundTint="@color/azul"
                 android:textAllCaps="true"
                 app:cornerRadius="20dp"/>
-
 
             <TextView
                 android:id="@+id/login_RedirectText"
