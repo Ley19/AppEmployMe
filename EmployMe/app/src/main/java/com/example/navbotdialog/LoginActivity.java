@@ -162,7 +162,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void iniciarSesion(String email, String password) {
-        String url = "http://localhost:3000/login";
+
+        String url = "http://192.168.0.111:3000/login";
 
         JSONObject jsonObject = new JSONObject();
         try {

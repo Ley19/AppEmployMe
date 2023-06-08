@@ -6,31 +6,47 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.text.Html;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class SignUpActivity extends AppCompatActivity {
     TextView loginRedirectText;
     boolean passwordVisible = false;
-    boolean passwordVisibleConfirmar = false;
-    EditText editTextPassword, editTextPasswordConfirmar;
-    ImageView buttonPassword, buttonPasswordConfirmar;
+    EditText editTextPassword;
+    ImageView buttonPassword;
+    EditText nameUserET, emailUseET, categoryUserET, phoneUserET, passwordUserET;
+    Button registerUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        editTextPassword = findViewById(R.id.passwordET);
+        editTextPassword = findViewById(R.id.passwordUser);
         buttonPassword = findViewById(R.id.passwordIcon);
-        editTextPasswordConfirmar = findViewById(R.id.conpassword);
-        buttonPasswordConfirmar = findViewById(R.id.conpasswordIcon);
-
         buttonPassword.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -52,24 +68,54 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        buttonPasswordConfirmar.setOnClickListener(new View.OnClickListener() {
 
+        // Obtener referencias a los campos de texto y al botón de registro
+        nameUserET = findViewById(R.id.nameUser);
+        emailUseET = findViewById(R.id.emailUser);
+        categoryUserET = findViewById(R.id.categoryUser);
+        phoneUserET = findViewById(R.id.phoneUser);
+        passwordUserET = findViewById(R.id.passwordUser);
+        registerUser = findViewById(R.id.btnRegisterUser);
+
+        registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (passwordVisibleConfirmar) {
-                    // Si la contraseña es visible, cambia el tipo de entrada a 'textPassword'
-                    editTextPasswordConfirmar.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    buttonPasswordConfirmar.setImageResource(R.drawable.ico_visibility_off);
-                    passwordVisibleConfirmar = false;
-                } else {
-                    // Si la contraseña está oculta, cambia el tipo de entrada a 'text'
-                    editTextPasswordConfirmar.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    buttonPasswordConfirmar.setImageResource(R.drawable.ico_visibility);
-                    passwordVisibleConfirmar = true;
+            public void onClick(View v) {
+                // Obtener los valores de los campos de texto
+                String userName = nameUserET.getText().toString();
+                String userEmail = emailUseET.getText().toString();
+                String userCategori = categoryUserET.getText().toString();
+                String userPhone = phoneUserET.getText().toString();
+                String userPassword = passwordUserET.getText().toString();
+
+                // Validar que todos los campos estén llenos
+                boolean isFormValid = true;
+
+                if (userName.isEmpty()) {
+                    nameUserET.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if (userEmail.isEmpty()) {
+                    emailUseET.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if (userCategori.isEmpty()) {
+                    categoryUserET.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if (userPhone.isEmpty()) {
+                    phoneUserET.setError("Campo obligatorio");
+                    isFormValid = false;
+                }
+                if (userPassword.isEmpty()) {
+                    passwordUserET.setError("Campo obligatorio");
+                    isFormValid = false;
                 }
 
-                // Mueve el cursor al final del texto de la contraseña
-                editTextPasswordConfirmar.setSelection(editTextPasswordConfirmar.getText().length());
+                if (isFormValid) {
+                    registerUser(userName, userEmail, userCategori, userPhone, userPassword);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -95,7 +141,6 @@ public class SignUpActivity extends AppCompatActivity {
                 // Iniciar las animaciones
                 animatorSet.start();
 
-
                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
 
@@ -105,6 +150,69 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
+
+    private void registerUser(String userName, String userEmail, String userCategori, String userPhone, String userPassword) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        // Construir el parámetro de la solicitud
+        HashMap<String, String> params = new HashMap<>();
+        params.put("nameUser", userName);
+        params.put("email", userEmail);
+        params.put("password", userPassword);
+        params.put("phone", userPhone);
+        params.put("dateRegister", currentDate);
+        params.put("id_category", userCategori);
+
+        String url = "http://192.168.0.111:3000/userCreate";
+
+        // Solicitud POST
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // La respuesta del servidor
+                        // Aquí puedes agregar el código para manejar la respuesta del servidor
+                        try {
+                            if (response.has("success")) {
+                                boolean success = response.getBoolean("success");
+                                if (success) {
+                                    // Inserción exitosa
+                                    Toast.makeText(getApplicationContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // Fallo en la inserción
+                                    String errorMessage = response.getString("message");
+                                    Toast.makeText(getApplicationContext(), "Error al registrar usuario: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Respuesta del servidor inválida", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error en la respuesta del servidor", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Error en la solicitud
+                        // Aquí puedes agregar el código para manejar el error de la solicitud
+                        Log.e("Error en la solicitud", error.getMessage());
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            String responseString = new String(error.networkResponse.data);
+                            Log.e("Respuesta del servidor", responseString);
+                        }
+
+                    }
+                });
+
+        // Agregar la solicitud a la cola de solicitudes
+        requestQueue.add(jsonObjectRequest);
+    }
+
 
 
 }

@@ -10,7 +10,7 @@ function getUserById(req, res) {
         } else if (results.length === 0) {
             res.status(404).send('Usuario no encontrado');
         } else {
-            const user = results[0]; 
+            const user = results[0];
             res.json(user);
         }
     });
@@ -40,7 +40,20 @@ function login(req, res) {
     });
 }
 
+function createUser(req, res) {
+    const user = req.body;
+    userService.createUser(user, (error, results) => {
+        if(error){
+            console.error('Erro al crear el usuario', error);
+            res.status(500).send('Error al crear el usuario');
+        }else{
+            res.send('Usuario creado correctamente');
+        }
+    });
+}
+
 module.exports = {
     getUserById,
     login,
+    createUser,
 };
