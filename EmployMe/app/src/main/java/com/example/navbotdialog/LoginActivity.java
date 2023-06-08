@@ -24,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
     TextView forgetPassword;
