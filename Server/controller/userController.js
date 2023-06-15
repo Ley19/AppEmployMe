@@ -42,6 +42,7 @@ function login(req, res) {
 
 function createUser(req, res) {
     const user = req.body;
+    console.log(user);
     userService.createUser(user, (error, results) => {
         if(error){
             console.error('Erro al crear el usuario', error);

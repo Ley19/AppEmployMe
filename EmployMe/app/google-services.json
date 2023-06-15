@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "482744135478",
+    "project_id": "employme-dcc1c",
+    "storage_bucket": "employme-dcc1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482744135478:android:cc608f16b056b2eefecd97",
+        "android_client_info": {
+          "package_name": "com.example.navbotdialog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482744135478-3safo8du7mm75ufatfh5spsrhmuj2dlp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaVtkGKF4wprAaNX8Yd1EO-_jTLrA1blo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482744135478-3safo8du7mm75ufatfh5spsrhmuj2dlp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

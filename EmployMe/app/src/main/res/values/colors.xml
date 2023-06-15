@@ -17,4 +17,14 @@
     <color name="Rosita">#F114B2</color>
     <color name="azul">#368690</color>
     <color name="gris">#BFD4D6</color>
+
+    <!-- Notas-->
+    <color name="CC_rosita">#35F3E1</color>
+    <color name="CC_grisesito">#74DFD5</color>
+    <color name="CC_moradio">#1EE3D0</color>
+    <color name="CC_cafesito">#4CAF50</color>
+    <color name="CC_azulito">#37C33D</color>
+    <color name="CC_azulito2">#2196F3</color>
+    <color name="CC_rojito">#8BC34A</color>
+    <color name="CC_huesito">#009688</color>
 </resources>

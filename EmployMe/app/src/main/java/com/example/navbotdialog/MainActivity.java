@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     notifyLayout.addView(notifyView);
                     break;
                 case R.id.nav_perfil:
-                    replaceFragment(new NotificacionesFragment());
+                    replaceFragment(new PerfilFragment());
                     LottieAnimationView profileView = new LottieAnimationView(this);
                     profileView.setAnimation(R.raw.userss);
                     profileView.playAnimation();

@@ -43,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
     EditText nameUserET, emailUseET, categoryUserET, phoneUserET, passwordUserET;
     Button registerUser;
 
+    public boolean isAccepted=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,22 +98,27 @@ public class SignUpActivity extends AppCompatActivity {
                 if (userName.isEmpty()) {
                     nameUserET.setError("Campo obligatorio");
                     isFormValid = false;
+                    isAccepted=false;
                 }
                 if (userEmail.isEmpty()) {
                     emailUseET.setError("Campo obligatorio");
                     isFormValid = false;
+                    isAccepted=false;
                 }
                 if (userCategori.isEmpty()) {
                     categoryUserET.setError("Campo obligatorio");
                     isFormValid = false;
+                    isAccepted=false;
                 }
                 if (userPhone.isEmpty()) {
                     phoneUserET.setError("Campo obligatorio");
                     isFormValid = false;
+                    isAccepted=false;
                 }
                 if (userPassword.isEmpty()) {
                     passwordUserET.setError("Campo obligatorio");
                     isFormValid = false;
+                    isAccepted=false;
                 }
 
                 if (isFormValid) {
@@ -119,6 +126,12 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
                 }
+
+                if(isAccepted){
+                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 

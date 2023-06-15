@@ -26,19 +26,10 @@
         android:title="">
         <menu>
             <item
-                android:id="@+id/id_calculadora"
+                android:id="@+id/nav1_herramientas"
                 android:icon="@drawable/ico_calculadora"
-                android:title="Calculadora"/>
+                android:title="Herramientas"/>
 
-            <item
-                android:id="@+id/id_notas"
-                android:icon="@drawable/ico_notas"
-                android:title="Notas"/>
-
-            <item
-                android:id="@+id/id_conversor"
-                android:icon="@drawable/ico_conversor"
-                android:title="Conversor de unidades"/>
 
         </menu>
     </item>
